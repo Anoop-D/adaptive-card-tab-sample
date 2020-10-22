@@ -23,7 +23,7 @@
                         {
                             "type": "Image",
                             "style": "Person",
-                            "url": "${creator.profileImage}",
+                            "url": "https://randomuser.me/api/portraits/women/32.jpg",
                             "size": "Small"
                         }
                     ],

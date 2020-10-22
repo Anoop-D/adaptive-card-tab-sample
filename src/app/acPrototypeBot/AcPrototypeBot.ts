@@ -145,6 +145,13 @@ export class AcPrototypeBot implements IBot {
         const managerCard = CardFactory.adaptiveCard(ManagerDashboardCard);
         // Return the specified task module response to the bot
 
+        // tslint:disable-next-line: no-string-literal
+        managerCard.content["$data"] = {
+          creator: {
+            name: ctx.activity.name,
+            profileImage: "https://randomuser.me/api/portraits/women/32.jpg",
+          },
+        };
         let responseBody: any;
 
         const tabResponse: any = {
