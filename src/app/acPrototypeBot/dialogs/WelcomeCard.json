@@ -1,0 +1,50 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.0",
+    "body": [
+      {
+        "type": "Image",
+        "url": "https://adaptivecards.io/content/cats/1.png",
+        "size": "medium"
+      },
+      {
+        "type": "TextBlock",
+        "spacing": "medium",
+        "size": "default",
+        "weight": "bolder",
+        "text": "Welcome to acPrototype",
+        "wrap": true,
+        "maxLines": 0
+      },
+      {
+        "type": "TextBlock",
+        "size": "default",
+        "isSubtle": true,
+        "text": "Hello, nice to meet you!",
+        "wrap": true,
+        "maxLines": 0
+      }
+    ],
+    "actions": [
+      {
+        "type": "Action.OpenUrl",
+        "title": "Learn more about Yo Teams",
+        "url": "https://aka.ms/yoteams"
+      },
+      {
+        "type": "Action.OpenUrl",
+        "title": "acPrototype",
+        "url": "https://andhillo-relay.servicebus.windows.net/MININT-S5EDEDH"
+      },
+      {
+        "type": "Action.Submit",
+        "title": "Task Module Invoke",
+        "data": {
+          "msteams": {
+            "type": "task/fetch"
+          }
+        }
+      }
+    ]
+  }
