@@ -80,10 +80,6 @@ export class AcPrototypeTab extends TeamsBaseComponent<IAcPrototypeTabProps, IAc
             });
         };
 
-        const invoke = () => {
-            microsoftTeams.tasks.invokeTask();
-        };
-
         return (
             <TeamsThemeContext.Provider value={context}>
                 <Surface>
@@ -97,7 +93,6 @@ export class AcPrototypeTab extends TeamsBaseComponent<IAcPrototypeTabProps, IAc
                             </div>
                             <div style={styles.section}>
                                 <PrimaryButton onClick={onClick}>Task Module Button</PrimaryButton>
-                                <PrimaryButton onClick={invoke}>Invoke Button</PrimaryButton>
                             </div>
                         </PanelBody>
                         <PanelFooter>
