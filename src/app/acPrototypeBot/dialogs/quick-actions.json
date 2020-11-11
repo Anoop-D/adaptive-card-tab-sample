@@ -1,35 +1,51 @@
 {
-    "type": "AdaptiveCard",
-    "body": [
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "Quick Actions"
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
         {
-            "type": "TextBlock",
-            "size": "Medium",
-            "weight": "Bolder",
-            "text": "Quick Actions"
+          "type": "Action.Submit",
+          "title": "Take time off",
+          "data": {
+            "msteams": {
+              "type": "tab/submit",
+              "value": {
+                "data": {
+                  "type": "tab/submit"
+                },
+                "context": {
+                  "theme": "default"
+                },
+                "tabContext": {
+                  "tabEntityId": "default-data"
+                }
+              }
+            }
+          }
         },
         {
-            "type": "ActionSet",
-            "actions": [
-                {
-                    "type": "Action.Submit",
-                    "title": "Take time off"
-                },
-                {
-                    "type": "Action.Submit",
-                    "title": "Look up a coworker"
-                },
-                {
-                    "type": "Action.Submit",
-                    "title": "Give feedback"
-                },
-                {
-                    "type": "Action.Submit",
-                    "title": "Ask Workday"
-                }
-            ],
-            "separator": true
+          "type": "Action.Submit",
+          "title": "Look up a coworker"
+        },
+        {
+          "type": "Action.Submit",
+          "title": "Give feedback"
+        },
+        {
+          "type": "Action.Submit",
+          "title": "Ask Workday"
         }
-    ],
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "version": "1.2"
+      ],
+      "separator": true
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.2"
 }

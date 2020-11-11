@@ -1,50 +1,106 @@
 {
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "type": "AdaptiveCard",
-    "version": "1.0",
-    "body": [
-      {
-        "type": "Image",
-        "url": "https://adaptivecards.io/content/cats/1.png",
-        "size": "medium"
-      },
-      {
-        "type": "TextBlock",
-        "spacing": "medium",
-        "size": "default",
-        "weight": "bolder",
-        "text": "Welcome to acPrototype",
-        "wrap": true,
-        "maxLines": 0
-      },
-      {
-        "type": "TextBlock",
-        "size": "default",
-        "isSubtle": true,
-        "text": "Hello, nice to meet you!",
-        "wrap": true,
-        "maxLines": 0
-      }
-    ],
-    "actions": [
-      {
-        "type": "Action.OpenUrl",
-        "title": "Learn more about Yo Teams",
-        "url": "https://aka.ms/yoteams"
-      },
-      {
-        "type": "Action.OpenUrl",
-        "title": "acPrototype",
-        "url": "https://andhillo-relay.servicebus.windows.net/MININT-S5EDEDH"
-      },
-      {
-        "type": "Action.Submit",
-        "title": "Task Module Invoke",
-        "data": {
-          "msteams": {
-            "type": "task/fetch"
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "Image",
+      "url": "https://adaptivecards.io/content/cats/1.png",
+      "size": "medium"
+    },
+    {
+      "type": "TextBlock",
+      "spacing": "medium",
+      "size": "default",
+      "weight": "bolder",
+      "text": "Welcome to acPrototype",
+      "wrap": true,
+      "maxLines": 0
+    },
+    {
+      "type": "TextBlock",
+      "size": "default",
+      "isSubtle": true,
+      "text": "Hello, nice to meet you!",
+      "wrap": true,
+      "maxLines": 0,
+      "id": "textToToggle",
+      "isVisible": false
+    },
+    {
+      "type": "ColumnSet",
+      "isVisible": false,
+      "id": "imagesToToggle",
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
+            {
+              "style": "person",
+              "type": "Image",
+              "url": "https://picsum.photos/300?image=1025",
+              "isVisible": false,
+              "id": "imageToToggle",
+              "altText": "sample image 1",
+              "size": "medium"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "Image",
+              "url": "https://picsum.photos/300?image=433",
+              "isVisible": false,
+              "id": "imageToToggle2",
+              "altText": "sample image 2",
+              "size": "medium"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.ToggleVisibility",
+      "title": "Show welcome message",
+      "targetElements": ["textToToggle", "imagesToToggle", "imageToToggle2"]
+    },
+    {
+      "type": "Action.ShowCard",
+      "title": "Learn more about Adaptive Card Tabs",
+      "card": {
+        "type": "AdaptiveCard",
+        "body": [
+          {
+            "type": "TextBlock",
+            "text": "Adaptive Card Tabs Spec"
           }
+        ],
+        "actions": [
+          {
+            "type": "Action.OpenUrl",
+            "title": "Learn More",
+            "url": "https://microsoft.sharepoint.com/:p:/t/ExtensibilityandFundamentals/EWCKez9sB3NEta260kfdMnkBFUu16Z9rnN-gugIqh8D5QQ?e=tBMY9U"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Action.OpenUrl",
+      "title": "acPrototype",
+      "url": "https://acprototype.azurewebsites.net"
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Task Module Invoke",
+      "data": {
+        "msteams": {
+          "type": "task/fetch"
         }
       }
-    ]
-  }
+    }
+  ]
+}

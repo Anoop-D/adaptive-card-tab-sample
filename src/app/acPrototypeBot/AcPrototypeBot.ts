@@ -169,7 +169,7 @@ export class AcPrototypeBot implements IBot {
         };
 
         // console.dir(ctx.activity);
-        // console.log(ctx.activity.name);
+        console.log(ctx.activity.name);
 
         switch (ctx.activity.name) {
           case "task/fetch":
