@@ -15,32 +15,36 @@
           "title": "Take time off",
           "data": {
             "msteams": {
-              "type": "tab/submit",
-              "value": {
-                "data": {
-                  "type": "tab/submit"
-                },
-                "context": {
-                  "theme": "default"
-                },
-                "tabContext": {
-                  "tabEntityId": "default-data"
-                }
-              }
+              "type": "tab/submit"
             }
           }
         },
         {
           "type": "Action.Submit",
-          "title": "Look up a coworker"
+          "title": "Look up a coworker",
+          "data": {
+            "msteams": {
+              "type": "tab/submit"
+            }
+          }
         },
         {
           "type": "Action.Submit",
-          "title": "Give feedback"
+          "title": "Give feedback",
+          "data": {
+            "msteams": {
+              "type": "tab/submit"
+            }
+          }
         },
         {
           "type": "Action.Submit",
-          "title": "Ask Workday"
+          "title": "Ask Workday",
+          "data": {
+            "msteams": {
+              "type": "tab/submit"
+            }
+          }
         }
       ],
       "separator": true
