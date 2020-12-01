@@ -214,7 +214,7 @@ export class AcPrototypeBot implements IBot {
   }
 
   /**
-   * The Bot Framework `onTurn` handlder.
+   * The Bot Framework `onTurn` handler.
    * The Microsoft Teams middleware for Bot Framework uses a custom activity processor (`TeamsActivityProcessor`)
    * which is configured in the constructor of this sample
    */
