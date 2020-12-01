@@ -143,6 +143,7 @@ export class AcPrototypeBot implements IBot {
         const adminCard = CardFactory.adaptiveCard(AdminCard);
         const quickActionsCard = CardFactory.adaptiveCard(QuickActionCard);
         const managerCard = CardFactory.adaptiveCard(ManagerDashboardCard);
+        const taskModuleCard = CardFactory.adaptiveCard(FlightItineraryCard);
         // Return the specified task module response to the bot
 
         // tslint:disable-next-line: no-string-literal
@@ -168,8 +169,14 @@ export class AcPrototypeBot implements IBot {
           },
         };
 
-        // console.dir(ctx.activity);
-        console.log(ctx.activity.name);
+        const tabSubmitResponse: any = {
+          tab: {
+            type: "continue",
+            value: {
+              cards: [{ card: welcomeCard.content }],
+            },
+          },
+        };
 
         switch (ctx.activity.name) {
           case "task/fetch":
@@ -179,8 +186,8 @@ export class AcPrototypeBot implements IBot {
                 value: {
                   height: "medium",
                   width: "medium",
-                  title: "Quick Actions",
-                  card: quickActionsCard,
+                  title: "task",
+                  card: taskModuleCard,
                 },
               },
             };
@@ -194,6 +201,8 @@ export class AcPrototypeBot implements IBot {
             };
             break;
           case "tab/submit":
+            responseBody = tabSubmitResponse;
+            break;
           case "tab/fetch":
           default:
             responseBody = tabResponse;
