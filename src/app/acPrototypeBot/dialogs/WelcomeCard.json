@@ -13,7 +13,7 @@
       "spacing": "medium",
       "size": "default",
       "weight": "bolder",
-      "text": "Welcome to acPrototype",
+      "text": "More actions ✨",
       "wrap": true,
       "maxLines": 0
     },
@@ -65,12 +65,12 @@
   "actions": [
     {
       "type": "Action.ToggleVisibility",
-      "title": "Show welcome message",
+      "title": "Get started",
       "targetElements": ["textToToggle", "imagesToToggle", "imageToToggle2"]
     },
     {
       "type": "Action.ShowCard",
-      "title": "Learn more about Adaptive Card Tabs",
+      "title": "Learn more",
       "card": {
         "type": "AdaptiveCard",
         "body": [
@@ -82,7 +82,7 @@
         "actions": [
           {
             "type": "Action.OpenUrl",
-            "title": "Learn More",
+            "title": "Open in browser",
             "url": "https://microsoft.sharepoint.com/:p:/t/ExtensibilityandFundamentals/EWCKez9sB3NEta260kfdMnkBFUu16Z9rnN-gugIqh8D5QQ?e=tBMY9U"
           }
         ]
@@ -95,7 +95,7 @@
     },
     {
       "type": "Action.Submit",
-      "title": "Task Module Invoke",
+      "title": "Advanced",
       "data": {
         "msteams": {
           "type": "task/fetch"

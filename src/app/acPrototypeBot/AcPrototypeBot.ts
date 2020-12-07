@@ -15,13 +15,16 @@ import {
   ActivityTypes,
   InvokeResponse,
 } from "botbuilder";
+import { MicrosoftAppCredentials } from "botframework-connector";
 import HelpDialog from "./dialogs/HelpDialog";
 import WelcomeCard from "./dialogs/WelcomeDialog";
-import FlightItineraryCard from "./dialogs/FlightItineraryDialog";
+import VideoPlayerCard from "./dialogs/VideoPlayerCard";
 import { TeamsContext, TeamsActivityProcessor } from "botbuilder-teams";
 import AdminCard from "./dialogs/AdminCard";
 import QuickActionCard from "./dialogs/QuickActionsCard";
 import ManagerDashboardCard from "./dialogs/ManagerDashboard";
+import InterviewCandidatesCard from "./dialogs/interviewCandidates";
+import SuccessCard from "./dialogs/SuccessCard";
 
 // Initialize debug logging module
 const log = debug("msteams");
@@ -41,7 +44,10 @@ export class AcPrototypeBot implements IBot {
   private readonly dialogs: DialogSet;
   private dialogState: StatePropertyAccessor<DialogState>;
   private readonly activityProc = new TeamsActivityProcessor();
-
+  private readonly credentials = new MicrosoftAppCredentials(
+    process.env.MICROSOFT_APP_ID || "",
+    process.env.MICROSOFT_APP_PASSWORD || ""
+  );
   /**
    * The constructor
    * @param conversationState
@@ -51,6 +57,10 @@ export class AcPrototypeBot implements IBot {
     this.dialogState = conversationState.createProperty("dialogState");
     this.dialogs = new DialogSet(this.dialogState);
     this.dialogs.add(new HelpDialog("help"));
+
+    MicrosoftAppCredentials.trustServiceUrl(
+      "https://smba-int.cloudapp.net/teams-int-mock/"
+    );
 
     // Set up the Activity processing
 
@@ -133,17 +143,17 @@ export class AcPrototypeBot implements IBot {
 
     this.activityProc.invokeActivityHandler = {
       onInvoke: async (context: TurnContext): Promise<InvokeResponse> => {
-        // console.dir(context);
         const ctx: any = context;
-        // console.log("entities", ctx.entities);
-        // console.log("value", ctx.value);
-        // console.log("channelData", ctx.channelData);
+        // console.log(ctx.activity.value);
+        // console.log(ctx.activity.value.tabContext);
 
         const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
         const adminCard = CardFactory.adaptiveCard(AdminCard);
         const quickActionsCard = CardFactory.adaptiveCard(QuickActionCard);
         const managerCard = CardFactory.adaptiveCard(ManagerDashboardCard);
-        const taskModuleCard = CardFactory.adaptiveCard(FlightItineraryCard);
+        const videoPlayerCard = CardFactory.adaptiveCard(VideoPlayerCard);
+        const interviewCard = CardFactory.adaptiveCard(InterviewCandidatesCard);
+        const successCard = CardFactory.adaptiveCard(SuccessCard);
         // Return the specified task module response to the bot
 
         // tslint:disable-next-line: no-string-literal
@@ -155,7 +165,7 @@ export class AcPrototypeBot implements IBot {
         };
         let responseBody: any;
 
-        const tabResponse: any = {
+        const workdayTabResponse: any = {
           tab: {
             type: "continue",
             value: {
@@ -163,7 +173,19 @@ export class AcPrototypeBot implements IBot {
                 { card: quickActionsCard.content },
                 { card: managerCard.content },
                 { card: adminCard.content },
+              ],
+            },
+          },
+        };
+
+        const sampleTabResponse: any = {
+          tab: {
+            type: "continue",
+            value: {
+              cards: [
                 { card: welcomeCard.content },
+                { card: interviewCard.content },
+                { card: videoPlayerCard.content },
               ],
             },
           },
@@ -173,7 +195,12 @@ export class AcPrototypeBot implements IBot {
           tab: {
             type: "continue",
             value: {
-              cards: [{ card: welcomeCard.content }],
+              cards: [
+                { card: successCard.content },
+                { card: quickActionsCard.content },
+                { card: managerCard.content },
+                { card: adminCard.content },
+              ],
             },
           },
         };
@@ -187,7 +214,7 @@ export class AcPrototypeBot implements IBot {
                   height: "medium",
                   width: "medium",
                   title: "task",
-                  card: taskModuleCard,
+                  card: videoPlayerCard,
                 },
               },
             };
@@ -196,7 +223,7 @@ export class AcPrototypeBot implements IBot {
             responseBody = {
               task: {
                 type: "continue",
-                value: tabResponse,
+                value: workdayTabResponse,
               },
             };
             break;
@@ -205,7 +232,11 @@ export class AcPrototypeBot implements IBot {
             break;
           case "tab/fetch":
           default:
-            responseBody = tabResponse;
+            if (ctx.activity.value.tabContext.tabEntityId === "workday") {
+              responseBody = workdayTabResponse;
+            } else {
+              responseBody = sampleTabResponse;
+            }
             break;
         }
         return { status: 200, body: responseBody };

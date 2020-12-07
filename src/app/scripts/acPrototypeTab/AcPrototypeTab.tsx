@@ -12,7 +12,6 @@ import {
 import TeamsBaseComponent, { ITeamsBaseComponentProps, ITeamsBaseComponentState } from "msteams-react-base-component";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { TaskModuleDimension } from "@microsoft/teams-js";
-import { CardFactory } from "botbuilder";
 import WelcomeCard from "../../acPrototypeBot/dialogs/WelcomeDialog";
 
 /**

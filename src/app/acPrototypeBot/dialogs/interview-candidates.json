@@ -8,7 +8,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "Manager Dashboard | 3 employees",
+                    "text": "Interview Candidates | 5 candidates",
                     "weight": "Bolder",
                     "size": "Medium"
                 }
@@ -23,7 +23,7 @@
                         {
                             "type": "Image",
                             "style": "Person",
-                            "url": "https://randomuser.me/api/portraits/women/32.jpg",
+                            "url": "https://randomuser.me/api/portraits/men/21.jpg",
                             "size": "Small"
                         }
                     ],
@@ -35,13 +35,13 @@
                         {
                             "type": "TextBlock",
                             "weight": "Bolder",
-                            "text": "Charlotte Crum",
+                            "text": "Peter Smith",
                             "wrap": true
                         },
                         {
                             "type": "TextBlock",
                             "spacing": "None",
-                            "text": "🎉   5 year anniversary this week",
+                            "text": "Software Engineer 2 | Bend, Oregon",
                             "isSubtle": true,
                             "wrap": true,
                             "fontType": "Default",
@@ -78,7 +78,7 @@
                         {
                             "type": "Image",
                             "style": "Person",
-                            "url": "https://randomuser.me/api/portraits/women/36.jpg",
+                            "url": "https://randomuser.me/api/portraits/women/31.jpg",
                             "size": "Small"
                         }
                     ],
@@ -91,12 +91,12 @@
                             "type": "TextBlock",
                             "weight": "Bolder",
                             "wrap": true,
-                            "text": "Alexa Edwards"
+                            "text": "Marie Beaudoin"
                         },
                         {
                             "type": "TextBlock",
                             "spacing": "None",
-                            "text": "📅  Upcoming time off: Mar 20-25, Apr 1",
+                            "text": "Senior Product Manager | Boulder, Colorado",
                             "isSubtle": true,
                             "weight": "Lighter",
                             "fontType": "Default"
@@ -144,13 +144,121 @@
                         {
                             "type": "TextBlock",
                             "weight": "Bolder",
-                            "text": "Yingdan Huang",
+                            "text": "Susan Shammas",
                             "wrap": true
                         },
                         {
                             "type": "TextBlock",
                             "spacing": "None",
-                            "text": "🎂  Birthday this week",
+                            "text": "Design Manager | Vancouver, British Columbia",
+                            "isSubtle": true,
+                            "wrap": true,
+                            "weight": "Lighter"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "width": "50px",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "actions": [
+                                {
+                                    "type": "Action.Submit",
+                                    "title": "..."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "separator": true,
+            "spacing": "Medium"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "style": "Person",
+                            "url": "https://randomuser.me/api/portraits/men/40.jpg",
+                            "size": "Small"
+                        }
+                    ],
+                    "width": "auto"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "weight": "Bolder",
+                            "text": "Aaron Buxton",
+                            "wrap": true
+                        },
+                        {
+                            "type": "TextBlock",
+                            "spacing": "None",
+                            "text": "Senior Software Engineer | Bend, Oregon",
+                            "isSubtle": true,
+                            "wrap": true,
+                            "weight": "Lighter"
+                        }
+                    ],
+                    "width": "stretch"
+                },
+                {
+                    "type": "Column",
+                    "width": "50px",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "actions": [
+                                {
+                                    "type": "Action.Submit",
+                                    "title": "..."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "separator": true,
+            "spacing": "Medium"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "style": "Person",
+                            "url": "https://randomuser.me/api/portraits/men/3.jpg",
+                            "size": "Small"
+                        }
+                    ],
+                    "width": "auto"
+                },
+                {
+                    "type": "Column",
+                    "items": [
+                        {
+                            "type": "TextBlock",
+                            "weight": "Bolder",
+                            "text": "John Barry",
+                            "wrap": true
+                        },
+                        {
+                            "type": "TextBlock",
+                            "spacing": "None",
+                            "text": "Design Manager | Seattle, Washington",
                             "isSubtle": true,
                             "wrap": true,
                             "weight": "Lighter"

@@ -8,9 +8,9 @@
       "items": [
         {
           "type": "TextBlock",
-          "text": "YouTube Video Selector",
-          "weight": "bolder",
-          "size": "extraLarge"
+          "text": "Video Player",
+          "weight": "Bolder",
+          "size": "Medium"
         }
       ]
     },
@@ -19,7 +19,7 @@
       "items": [
         {
           "type": "TextBlock",
-          "text": "Enter the ID of a YouTube video to show in the task module player.",
+          "text": "Enter the ID of a YouTube video to play in a dialog",
           "wrap": true
         },
         {

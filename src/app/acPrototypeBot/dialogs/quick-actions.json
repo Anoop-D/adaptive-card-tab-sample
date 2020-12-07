@@ -5,19 +5,14 @@
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "Quick Actions"
+      "text": "Quick actions ✨"
     },
     {
       "type": "ActionSet",
       "actions": [
         {
           "type": "Action.Submit",
-          "title": "Take time off",
-          "data": {
-            "msteams": {
-              "type": "tab/submit"
-            }
-          }
+          "title": "Take time off"
         },
         {
           "type": "Action.Submit",
