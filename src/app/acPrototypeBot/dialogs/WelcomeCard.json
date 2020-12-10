@@ -4,11 +4,6 @@
   "version": "1.0",
   "body": [
     {
-      "type": "Image",
-      "url": "https://adaptivecards.io/content/cats/1.png",
-      "size": "medium"
-    },
-    {
       "type": "TextBlock",
       "spacing": "medium",
       "size": "default",

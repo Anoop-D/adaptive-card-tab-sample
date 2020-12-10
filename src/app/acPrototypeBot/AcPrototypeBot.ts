@@ -223,7 +223,7 @@ export class AcPrototypeBot implements IBot {
             responseBody = {
               task: {
                 type: "continue",
-                value: workdayTabResponse,
+                value: tabSubmitResponse,
               },
             };
             break;
