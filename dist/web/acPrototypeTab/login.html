@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/styles/main.css">
+  <!-- endinject -->
+  
+</style>
+</head>
+
+<body>
+  <div id='app'>
+    Loading...
+  </div>
+  <!-- inject:js -->
+  <script src="/scripts/client.js"></script>
+  <!-- endinject -->
+  <script type='text/javascript'>
+    const toQueryString = (queryParams) =>  {
+        // tslint:disable-next-line: prefer-const
+        let encodedQueryParams = [];
+        for (const key of Object.keys(queryParams)) {
+            encodedQueryParams.push(key + "=" + encodeURIComponent(queryParams[key]));
+        }
+        return encodedQueryParams.join("&");
+    };
+
+    const state = Math.random().toString(); // _guid() is a helper function in the sample
+    // Go to the Azure AD authorization endpoint
+    const queryParams = {
+        client_id: "eda13c8b-ec36-4ef5-a600-999c9531a536",
+        response_type: "id_token token",
+        response_mode: "fragment",
+        scope: "https://graph.microsoft.com/User.Read openid",
+        redirect_uri: "https://andhillo-relay.servicebus.windows.net:443/MININT-S5EDEDH/acPrototypeTab/redirect.html",
+        nonce: Math.random().toString(),
+        state
+    };
+
+    const authorizeEndpoint = "https://login.microsoftonline.com/" + "72f988bf-86f1-41af-91ab-2d7cd011db47" + "/oauth2/v2.0/authorize?" + toQueryString(queryParams);
+    window.location.assign(authorizeEndpoint);
+  </script>
+</body>
+
+</html>

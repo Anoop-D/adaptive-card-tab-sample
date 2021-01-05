@@ -25,6 +25,7 @@ import QuickActionCard from "./dialogs/QuickActionsCard";
 import ManagerDashboardCard from "./dialogs/ManagerDashboard";
 import InterviewCandidatesCard from "./dialogs/interviewCandidates";
 import SuccessCard from "./dialogs/SuccessCard";
+import { couldStartTrivia } from "typescript";
 
 // Initialize debug logging module
 const log = debug("msteams");
@@ -44,10 +45,7 @@ export class AcPrototypeBot implements IBot {
   private readonly dialogs: DialogSet;
   private dialogState: StatePropertyAccessor<DialogState>;
   private readonly activityProc = new TeamsActivityProcessor();
-  private readonly credentials = new MicrosoftAppCredentials(
-    process.env.MICROSOFT_APP_ID || "",
-    process.env.MICROSOFT_APP_PASSWORD || ""
-  );
+  private loggedInMemberOIDs: Map<string, object> = new Map();
   /**
    * The constructor
    * @param conversationState
@@ -57,10 +55,6 @@ export class AcPrototypeBot implements IBot {
     this.dialogState = conversationState.createProperty("dialogState");
     this.dialogs = new DialogSet(this.dialogState);
     this.dialogs.add(new HelpDialog("help"));
-
-    MicrosoftAppCredentials.trustServiceUrl(
-      "https://smba-int.cloudapp.net/teams-int-mock/"
-    );
 
     // Set up the Activity processing
 
@@ -144,8 +138,39 @@ export class AcPrototypeBot implements IBot {
     this.activityProc.invokeActivityHandler = {
       onInvoke: async (context: TurnContext): Promise<InvokeResponse> => {
         const ctx: any = context;
-        // console.log(ctx.activity.value);
-        // console.log(ctx.activity.value.tabContext);
+        // console.log(ctx.activity);
+        console.log(ctx.activity.value);
+
+        // If not logged in
+        if (ctx.activity.value.state != null) {
+          this.loggedInMemberOIDs.set(
+            ctx.activity.from.aadObjectId,
+            ctx.activity.value.state
+          );
+        }
+        const isVerified = await this.verifyAuthToken(
+          ctx.activity.from.aadObjectId
+        );
+        if (!isVerified) {
+          return {
+            status: 200,
+            body: {
+              tab: {
+                type: "auth",
+                suggestedActions: {
+                  actions: [
+                    {
+                      type: "openUrl",
+                      value:
+                        "https://andhillo-relay.servicebus.windows.net/MININT-S5EDEDH/acPrototypeTab/login.html",
+                      title: "Sign in to this app!",
+                    },
+                  ],
+                },
+              },
+            },
+          };
+        }
 
         const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
         const adminCard = CardFactory.adaptiveCard(AdminCard);
@@ -157,12 +182,12 @@ export class AcPrototypeBot implements IBot {
         // Return the specified task module response to the bot
 
         // tslint:disable-next-line: no-string-literal
-        managerCard.content["$data"] = {
-          creator: {
-            name: ctx.activity.name,
-            profileImage: "https://randomuser.me/api/portraits/women/32.jpg",
-          },
-        };
+        // managerCard.content["$data"] = {
+        //   creator: {
+        //     name: ctx.activity.name,
+        //     profileImage: "https://randomuser.me/api/portraits/women/32.jpg",
+        //   },
+        // };
         let responseBody: any;
 
         const workdayTabResponse: any = {
@@ -205,6 +230,20 @@ export class AcPrototypeBot implements IBot {
           },
         };
 
+        const sampleSubmitTabResponse: any = {
+          tab: {
+            type: "continue",
+            value: {
+              cards: [
+                { card: successCard.content },
+                { card: welcomeCard.content },
+                { card: interviewCard.content },
+                { card: videoPlayerCard.content },
+              ],
+            },
+          },
+        };
+
         switch (ctx.activity.name) {
           case "task/fetch":
             responseBody = {
@@ -220,12 +259,21 @@ export class AcPrototypeBot implements IBot {
             };
             break;
           case "task/submit":
-            responseBody = {
-              task: {
-                type: "continue",
-                value: tabSubmitResponse,
-              },
-            };
+            if (ctx.activity.value.tabContext.tabEntityId === "workday") {
+              responseBody = {
+                task: {
+                  type: "continue",
+                  value: tabSubmitResponse,
+                },
+              };
+            } else {
+              responseBody = {
+                task: {
+                  type: "continue",
+                  value: sampleSubmitTabResponse,
+                },
+              };
+            }
             break;
           case "tab/submit":
             responseBody = tabSubmitResponse;
@@ -252,5 +300,22 @@ export class AcPrototypeBot implements IBot {
   public async onTurn(context: TurnContext): Promise<any> {
     // transfer the activity to the TeamsActivityProcessor
     await this.activityProc.processIncomingActivity(context);
+  }
+
+  private async verifyAuthToken(aadObjectId: string): Promise<boolean> {
+    const authState: any = this.loggedInMemberOIDs.get(aadObjectId);
+    if (!authState) {
+      return false;
+    }
+
+    const response = await fetch("https://graph.microsoft.com/v1.0/me/", {
+      headers: {
+        Authorization: "Bearer " + authState.accessToken,
+      },
+    });
+    const profile = await response.json();
+    // tslint:disable-next-line: no-console
+    // console.log(profile);
+    return profile.error == null;
   }
 }

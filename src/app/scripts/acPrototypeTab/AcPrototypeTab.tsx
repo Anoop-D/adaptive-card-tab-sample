@@ -84,7 +84,7 @@ export class AcPrototypeTab extends TeamsBaseComponent<IAcPrototypeTabProps, IAc
                 <Surface>
                     <Panel>
                         <PanelHeader>
-                            <div style={styles.header}>This is your tab</div>
+                            <div style={styles.header}>This is your tab from index.html</div>
                         </PanelHeader>
                         <PanelBody>
                             <div style={styles.section}>
