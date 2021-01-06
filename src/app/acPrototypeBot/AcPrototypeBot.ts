@@ -15,7 +15,6 @@ import {
   ActivityTypes,
   InvokeResponse,
 } from "botbuilder";
-import { MicrosoftAppCredentials } from "botframework-connector";
 import HelpDialog from "./dialogs/HelpDialog";
 import WelcomeCard from "./dialogs/WelcomeDialog";
 import VideoPlayerCard from "./dialogs/VideoPlayerCard";
@@ -25,7 +24,6 @@ import QuickActionCard from "./dialogs/QuickActionsCard";
 import ManagerDashboardCard from "./dialogs/ManagerDashboard";
 import InterviewCandidatesCard from "./dialogs/interviewCandidates";
 import SuccessCard from "./dialogs/SuccessCard";
-import { couldStartTrivia } from "typescript";
 
 // Initialize debug logging module
 const log = debug("msteams");
@@ -139,7 +137,7 @@ export class AcPrototypeBot implements IBot {
       onInvoke: async (context: TurnContext): Promise<InvokeResponse> => {
         const ctx: any = context;
         // console.log(ctx.activity);
-        console.log(ctx.activity.value);
+        // console.log(ctx.activity.value);
 
         // If not logged in
         if (ctx.activity.value.state != null) {
@@ -148,10 +146,14 @@ export class AcPrototypeBot implements IBot {
             ctx.activity.value.state
           );
         }
-        const isVerified = await this.verifyAuthToken(
+        const profile = await this.getUserProfile(
           ctx.activity.from.aadObjectId
         );
-        if (!isVerified) {
+
+        if (
+          ctx.activity.value.tabContext.tabEntityId === "workday" &&
+          !profile
+        ) {
           return {
             status: 200,
             body: {
@@ -175,19 +177,12 @@ export class AcPrototypeBot implements IBot {
         const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
         const adminCard = CardFactory.adaptiveCard(AdminCard);
         const quickActionsCard = CardFactory.adaptiveCard(QuickActionCard);
-        const managerCard = CardFactory.adaptiveCard(ManagerDashboardCard);
+        const managerCard = CardFactory.adaptiveCard(
+          ManagerDashboardCard(profile)
+        );
         const videoPlayerCard = CardFactory.adaptiveCard(VideoPlayerCard);
         const interviewCard = CardFactory.adaptiveCard(InterviewCandidatesCard);
         const successCard = CardFactory.adaptiveCard(SuccessCard);
-        // Return the specified task module response to the bot
-
-        // tslint:disable-next-line: no-string-literal
-        // managerCard.content["$data"] = {
-        //   creator: {
-        //     name: ctx.activity.name,
-        //     profileImage: "https://randomuser.me/api/portraits/women/32.jpg",
-        //   },
-        // };
         let responseBody: any;
 
         const workdayTabResponse: any = {
@@ -302,7 +297,7 @@ export class AcPrototypeBot implements IBot {
     await this.activityProc.processIncomingActivity(context);
   }
 
-  private async verifyAuthToken(aadObjectId: string): Promise<boolean> {
+  private async getUserProfile(aadObjectId: string): Promise<any> {
     const authState: any = this.loggedInMemberOIDs.get(aadObjectId);
     if (!authState) {
       return false;
@@ -314,8 +309,6 @@ export class AcPrototypeBot implements IBot {
       },
     });
     const profile = await response.json();
-    // tslint:disable-next-line: no-console
-    // console.log(profile);
-    return profile.error == null;
+    return profile.error == null ? profile : undefined;
   }
 }
