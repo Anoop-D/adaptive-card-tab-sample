@@ -15,6 +15,7 @@ import {
   ActivityTypes,
   InvokeResponse,
 } from "botbuilder";
+import fetch from "node-fetch";
 import HelpDialog from "./dialogs/HelpDialog";
 import WelcomeCard from "./dialogs/WelcomeDialog";
 import VideoPlayerCard from "./dialogs/VideoPlayerCard";
@@ -312,8 +313,12 @@ export class AcPrototypeBot implements IBot {
       const profile = await response.json();
       return profile.error == null ? profile : undefined;
     } catch (error) {
-      console.log("***************** Error fetching user profile from graph ***************");
-      log("***************** Error fetching user profile from graph ***************");
+      console.log(
+        "***************** Error fetching user profile from graph ***************"
+      );
+      log(
+        "***************** Error fetching user profile from graph ***************"
+      );
       console.log(error);
       log(error);
     }
