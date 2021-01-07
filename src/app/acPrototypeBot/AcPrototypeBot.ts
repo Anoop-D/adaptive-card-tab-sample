@@ -164,7 +164,7 @@ export class AcPrototypeBot implements IBot {
                     {
                       type: "openUrl",
                       value:
-                        "https://andhillo-relay.servicebus.windows.net/MININT-S5EDEDH/acPrototypeTab/login.html",
+                        "https://acprototype.azurewebsites.net/acPrototypeTab/login.html",
                       title: "Sign in to this app!",
                     },
                   ],
@@ -302,13 +302,20 @@ export class AcPrototypeBot implements IBot {
     if (!authState) {
       return false;
     }
+    try {
+      const response = await fetch("https://graph.microsoft.com/v1.0/me/", {
+        headers: {
+          Authorization: "Bearer " + authState.accessToken,
+        },
+      });
 
-    const response = await fetch("https://graph.microsoft.com/v1.0/me/", {
-      headers: {
-        Authorization: "Bearer " + authState.accessToken,
-      },
-    });
-    const profile = await response.json();
-    return profile.error == null ? profile : undefined;
+      const profile = await response.json();
+      return profile.error == null ? profile : undefined;
+    } catch (error) {
+      console.log("***************** Error fetching user profile from graph ***************");
+      log("***************** Error fetching user profile from graph ***************");
+      console.log(error);
+      log(error);
+    }
   }
 }

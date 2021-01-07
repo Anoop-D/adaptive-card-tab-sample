@@ -38,7 +38,7 @@ export class Login extends TeamsBaseComponent<ILoginProps, ILoginState> {
             response_type: "id_token token",
             response_mode: "fragment",
             resource: "https://graph.microsoft.com",
-            redirect_uri: "https://andhillo-relay.servicebus.windows.net:443/MININT-S5EDEDH/acPrototypeTab/redirect.html",
+            redirect_uri: "https://acprototype.azurewebsites.net/acPrototypeTab/redirect.html",
             nonce: Math.random().toString(),
             state,
         };
