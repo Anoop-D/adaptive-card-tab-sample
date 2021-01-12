@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.js": "./static/js/main.ea03b442.chunk.js",
+    "main.js.map": "./static/js/main.ea03b442.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.688a9b36.js",
+    "runtime-main.js.map": "./static/js/runtime-main.688a9b36.js.map",
+    "static/js/2.5b8ced69.chunk.js": "./static/js/2.5b8ced69.chunk.js",
+    "static/js/2.5b8ced69.chunk.js.map": "./static/js/2.5b8ced69.chunk.js.map",
+    "static/js/3.e51e42bf.chunk.js": "./static/js/3.e51e42bf.chunk.js",
+    "static/js/3.e51e42bf.chunk.js.map": "./static/js/3.e51e42bf.chunk.js.map",
+    "index.html": "./index.html",
+    "static/js/2.5b8ced69.chunk.js.LICENSE.txt": "./static/js/2.5b8ced69.chunk.js.LICENSE.txt",
+    "static/media/teams-apps.7f0f0820.jpg": "./static/media/teams-apps.7f0f0820.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.688a9b36.js",
+    "static/js/2.5b8ced69.chunk.js",
+    "static/js/main.ea03b442.chunk.js"
+  ]
+}
