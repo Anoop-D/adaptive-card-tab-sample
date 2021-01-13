@@ -38,41 +38,19 @@
     <script type="text/javascript">
       microsoftTeams.initialize();
       localStorage.removeItem("simple.error");
-      let hashParams = getHashParameters();
-      if (hashParams["error"]) {
+      const error = '<%- error %>';
+      const state = '<%- state %>';
+      if (error) {
         // Authentication/authorization failed
-        localStorage.setItem("simple.error", JSON.stringify(hashParams));
+        localStorage.setItem("simple.error", error);
         microsoftTeams.authentication.notifyFailure(hashParams["error"]);
-      } else if (hashParams["access_token"]) {
+      } else if (state) {
         // Success -- return token information to the parent page
-        microsoftTeams.authentication.notifySuccess({
-          idToken: hashParams["id_token"],
-          accessToken: hashParams["access_token"],
-          tokenType: hashParams["token_type"],
-          expiresIn: hashParams["expires_in"],
-          state: hashParams["state"],
-          scope: hashParams["scope"],
-          code: hashParams["code"]
-        });
-        console.log();
+        microsoftTeams.authentication.notifySuccess(state);
       } else {
         // Unexpected condition: hash does not contain error or access_token parameter
-        localStorage.setItem("simple.error", JSON.stringify(hashParams));
+        localStorage.setItem("simple.error", error);
         microsoftTeams.authentication.notifyFailure("UnexpectedFailure");
-      }
-      // Parse hash parameters into key-value pairs
-      function getHashParameters() {
-        let hashParams = {};
-        location.hash
-          .substr(1)
-          .split("&")
-          .forEach(function (item) {
-            let s = item.split("="),
-              k = s[0],
-              v = s[1] && decodeURIComponent(s[1]);
-            hashParams[k] = v;
-          });
-        return hashParams;
       }
     </script>
   </body>

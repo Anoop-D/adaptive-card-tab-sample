@@ -23,12 +23,12 @@ const log = debug("msteams");
 /**
  * Implementation for acPrototype Bot
  */
-@BotDeclaration(
-  "/api/messages",
-  new MemoryStorage(),
-  process.env.MICROSOFT_APP_ID,
-  process.env.MICROSOFT_APP_PASSWORD
-)
+// @BotDeclaration(
+//   "/api/messages",
+//   new MemoryStorage(),
+//   process.env.MICROSOFT_APP_ID,
+//   process.env.MICROSOFT_APP_PASSWORD
+// )
 @PreventIframe("/acPrototypeBot/acProtoBotTab.html")
 export class AcPrototypeBot implements IBot {
   private readonly conversationState: ConversationState;
@@ -38,7 +38,10 @@ export class AcPrototypeBot implements IBot {
    * The constructor
    * @param conversationState
    */
-  public constructor(conversationState: ConversationState) {
+  public constructor(
+    memoryStorage: MemoryStorage,
+    conversationState: ConversationState
+  ) {
     this.conversationState = conversationState;
 
     // Set up the Activity processing
@@ -47,9 +50,10 @@ export class AcPrototypeBot implements IBot {
         const ctx: any = context;
         // If not logged in
         if (ctx.activity.value.state != null) {
+          const authCode = await memoryStorage.read([ctx.activity.value.state]);
           this.loggedInMemberOIDs.set(
             ctx.activity.from.aadObjectId,
-            ctx.activity.value.state
+            authCode[ctx.activity.value.state]
           );
         }
         const profile = await this.getUserProfile(
@@ -70,7 +74,7 @@ export class AcPrototypeBot implements IBot {
                     {
                       type: "openUrl",
                       value:
-                        "https://acprototype.azurewebsites.net/acPrototypeTab/login.html",
+                        "https://andhillo-relay.servicebus.windows.net:443/MININT-S5EDEDH/acPrototypeTab/login.html",
                       title: "Sign in to this app!",
                     },
                   ],
@@ -218,10 +222,7 @@ export class AcPrototypeBot implements IBot {
       const profile = await response.json();
       return profile.error == null ? profile : undefined;
     } catch (error) {
-      log(
-        "***************** Error fetching user profile from graph ***************"
-      );
-      log(error);
+      log("Error fetching user profile from graph: ", error);
     }
   }
 }
