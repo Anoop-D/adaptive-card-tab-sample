@@ -91,7 +91,7 @@ export class AcPrototypeBot implements IBot {
         const successCard = CardFactory.adaptiveCard(SuccessCard);
         let responseBody: any;
 
-        const workdayTabResponse: any = {
+        const primaryTabResponse: any = {
           tab: {
             type: "continue",
             value: {
@@ -104,7 +104,7 @@ export class AcPrototypeBot implements IBot {
           },
         };
 
-        const sampleTabResponse: any = {
+        const secondaryTabResponse: any = {
           tab: {
             type: "continue",
             value: {
@@ -182,9 +182,9 @@ export class AcPrototypeBot implements IBot {
           case "tab/fetch":
           default:
             if (ctx.activity.value.tabContext.tabEntityId === "workday") {
-              responseBody = workdayTabResponse;
+              responseBody = primaryTabResponse;
             } else {
-              responseBody = sampleTabResponse;
+              responseBody = secondaryTabResponse;
             }
             break;
         }
