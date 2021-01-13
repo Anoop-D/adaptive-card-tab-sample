@@ -117,7 +117,7 @@ export class AcPrototypeBot implements IBot {
           },
         };
 
-        const tabSubmitResponse: any = {
+        const primaryTabSubmitResponse: any = {
           tab: {
             type: "continue",
             value: {
@@ -131,7 +131,7 @@ export class AcPrototypeBot implements IBot {
           },
         };
 
-        const sampleSubmitTabResponse: any = {
+        const secondaryTabSubmitResponse: any = {
           tab: {
             type: "continue",
             value: {
@@ -164,20 +164,20 @@ export class AcPrototypeBot implements IBot {
               responseBody = {
                 task: {
                   type: "continue",
-                  value: tabSubmitResponse,
+                  value: primaryTabSubmitResponse,
                 },
               };
             } else {
               responseBody = {
                 task: {
                   type: "continue",
-                  value: sampleSubmitTabResponse,
+                  value: secondaryTabSubmitResponse,
                 },
               };
             }
             break;
           case "tab/submit":
-            responseBody = tabSubmitResponse;
+            responseBody = primaryTabSubmitResponse;
             break;
           case "tab/fetch":
           default:
