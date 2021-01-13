@@ -74,7 +74,7 @@ export class AcPrototypeBot implements IBot {
                     {
                       type: "openUrl",
                       value:
-                        "https://andhillo-relay.servicebus.windows.net:443/MININT-S5EDEDH/acPrototypeTab/login.html",
+                        "https://acprototype.azurewebsites.net/acPrototypeTab/login.html",
                       title: "Sign in to this app!",
                     },
                   ],

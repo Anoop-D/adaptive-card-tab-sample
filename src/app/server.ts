@@ -102,19 +102,20 @@ express.use("/assets", Express.static(path.join(__dirname, "web/assets")));
 express.post("/acPrototypeTab/redirect.html", (req, res) => {
   const authResponse = req.body;
   const state = Math.random().toString(); // _guid() is a helper function in the sample
+  console.dir(authResponse);
   memoryStorage.write({
     [state]: {
       idToken: authResponse.id_token,
       accessToken: authResponse.access_token,
       tokenType: authResponse.token_type,
       expiresIn: authResponse.expires_in,
-      state: authResponse.state,
       scope: authResponse.scope,
-      code: authResponse.code,
     },
   });
-  const p = path.join(__dirname, "web/acPrototypeTab/redirect.ejs");
-  res.render(p, { state, error: authResponse.error });
+  res.render(path.join(__dirname, "web/acPrototypeTab/redirect.ejs"), {
+    state,
+    error: authResponse.error,
+  });
 });
 
 // routing for bots, connectors and incoming web hooks - based on the decorators

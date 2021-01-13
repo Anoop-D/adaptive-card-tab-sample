@@ -35,8 +35,8 @@
         client_id: "eda13c8b-ec36-4ef5-a600-999c9531a536",
         response_type: "id_token token",
         response_mode: "form_post",
-        scope: "https://graph.microsoft.com/User.Read openid",
-        redirect_uri: "https://andhillo-relay.servicebus.windows.net:443/MININT-S5EDEDH/acPrototypeTab/redirect.html",
+        scope: "https://graph.microsoft.com/User.Read openid https://graph.microsoft.com/User.Read.All",
+        redirect_uri: "https://acprototype.azurewebsites.net/acPrototypeTab/redirect.html",
         nonce: Math.random().toString(),
         state
     };

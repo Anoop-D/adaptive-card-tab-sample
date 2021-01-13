@@ -38,12 +38,12 @@
     <script type="text/javascript">
       microsoftTeams.initialize();
       localStorage.removeItem("simple.error");
-      const error = '<%- error %>';
-      const state = '<%- state %>';
+      const error = "<%- error %>";
+      const state = "<%- state %>";
       if (error) {
         // Authentication/authorization failed
         localStorage.setItem("simple.error", error);
-        microsoftTeams.authentication.notifyFailure(hashParams["error"]);
+        microsoftTeams.authentication.notifyFailure(error);
       } else if (state) {
         // Success -- return token information to the parent page
         microsoftTeams.authentication.notifySuccess(state);
