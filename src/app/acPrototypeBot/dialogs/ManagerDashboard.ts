@@ -37,7 +37,7 @@ const ManagerDashboardCard = (profile) => ({
             {
               type: "TextBlock",
               weight: "Bolder",
-              text: profile.displayName,
+              text: (profile && profile.displayName) || "",
               wrap: true,
             },
             {
