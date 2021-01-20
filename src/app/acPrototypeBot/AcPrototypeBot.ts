@@ -1,4 +1,4 @@
-import { BotDeclaration, IBot, PreventIframe } from "express-msteams-host";
+import { IBot, PreventIframe } from "express-msteams-host";
 import * as debug from "debug";
 import {
   CardFactory,
@@ -20,15 +20,6 @@ import SuccessCard from "./dialogs/SuccessCard";
 // Initialize debug logging module
 const log = debug("msteams");
 
-/**
- * Implementation for acPrototype Bot
- */
-// @BotDeclaration(
-//   "/api/messages",
-//   new MemoryStorage(),
-//   process.env.MICROSOFT_APP_ID,
-//   process.env.MICROSOFT_APP_PASSWORD
-// )
 @PreventIframe("/acPrototypeBot/acProtoBotTab.html")
 export class AcPrototypeBot implements IBot {
   private readonly conversationState: ConversationState;
@@ -48,7 +39,8 @@ export class AcPrototypeBot implements IBot {
     this.activityProc.invokeActivityHandler = {
       onInvoke: async (context: TurnContext): Promise<InvokeResponse> => {
         const ctx: any = context;
-        // If not logged in
+        console.dir(ctx.activity);
+        // Verify state and retrieve stored accessToken.
         if (ctx.activity.value.state != null) {
           const authCode = await memoryStorage.read([ctx.activity.value.state]);
           this.loggedInMemberOIDs.set(
@@ -74,7 +66,7 @@ export class AcPrototypeBot implements IBot {
                     {
                       type: "openUrl",
                       value:
-                        "https://acprototype.azurewebsites.net/acPrototypeTab/login.html",
+                      "https://acprototype.azurewebsites.net/acPrototypeTab/login.html",
                       title: "Sign in to this app!",
                     },
                   ],
@@ -181,7 +173,14 @@ export class AcPrototypeBot implements IBot {
             }
             break;
           case "tab/submit":
-            responseBody = primaryTabSubmitResponse;
+            if (ctx.activity.value.data.shouldLogout === true) {
+              this.loggedInMemberOIDs.delete(ctx.activity.from.aadObjectId);
+            }
+            if (ctx.activity.value.tabContext.tabEntityId === "workday") {
+              responseBody = primaryTabSubmitResponse;
+            } else {
+              responseBody = secondaryTabSubmitResponse;
+            }
             break;
           case "tab/fetch":
           default:

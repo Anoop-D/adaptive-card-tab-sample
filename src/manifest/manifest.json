@@ -6,13 +6,13 @@
   "packageName": "acprototype",
   "developer": {
     "name": "proto",
-    "websiteUrl": "https://{{HOSTNAME}}",
-    "privacyUrl": "https://{{HOSTNAME}}/privacy.html",
-    "termsOfUseUrl": "https://{{HOSTNAME}}/tou.html"
+    "websiteUrl": "https://acprototype.azurewebsites.net",
+    "privacyUrl": "https://acprototype.azurewebsites.net/privacy.html",
+    "termsOfUseUrl": "https://acprototype.azurewebsites.net/tou.html"
   },
   "name": {
-    "short": "acPrototype",
-    "full": "acPrototype"
+    "short": "Workday",
+    "full": "Workday Prototype"
   },
   "description": {
     "short": "TODO: add short description here",
@@ -26,54 +26,24 @@
   "configurableTabs": [],
   "staticTabs": [
     {
-      "entityId": "default-data",
-      "name": "acPrototype Tab",
-      "contentBotId": "{{MICROSOFT_APP_ID}}",
-      "scopes": [
-        "personal"
-      ]
+      "entityId": "workday",
+      "name": "Home",
+      "contentBotId": "eda13c8b-ec36-4ef5-a600-999c9531a536",
+      "scopes": ["personal"]
     },
     {
-      "entityId": "6a552130-d2bc-11ea-b3f9-0971a6aaae47",
-      "name": "acProto Bot Tab",
-      "contentUrl": "https://{{HOSTNAME}}/acPrototypeBot/acProtoBotTab.html",
-      "scopes": [
-        "personal"
-      ]
-    }
-  ],
-  "bots": [
-    {
-      "botId": "{{MICROSOFT_APP_ID}}",
-      "needsChannelSelector": true,
-      "isNotificationOnly": false,
-      "scopes": [
-        "team",
-        "personal"
-      ],
-      "commandLists": [
-        {
-          "scopes": [
-            "team",
-            "personal"
-          ],
-          "commands": [
-            {
-              "title": "Help",
-              "description": "Shows help information"
-            }
-          ]
-        }
-      ]
+      "entityId": "samples",
+      "name": "More",
+      "contentBotId": "eda13c8b-ec36-4ef5-a600-999c9531a536",
+      "scopes": ["personal"]
     }
   ],
   "connectors": [],
   "composeExtensions": [],
-  "permissions": [
-    "identity",
-    "messageTeamMembers"
-  ],
+  "permissions": ["identity", "messageTeamMembers"],
   "validDomains": [
-    "{{HOSTNAME}}"
+    "andhillo-relay.servicebus.windows.net",
+    "acprototype.azurewebsites.net",
+    "token.botframework.com"
   ]
 }

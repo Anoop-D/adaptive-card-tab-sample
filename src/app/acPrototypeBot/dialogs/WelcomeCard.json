@@ -84,9 +84,11 @@
       }
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "acPrototype",
-      "url": "https://acprototype.azurewebsites.net"
+      "type": "Action.Submit",
+      "title": "Log Out",
+      "data": {
+        "shouldLogout": true
+      }
     },
     {
       "type": "Action.Submit",
