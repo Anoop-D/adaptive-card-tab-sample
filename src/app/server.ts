@@ -91,7 +91,7 @@ express.use(morgan("tiny"));
 // Listen for incoming requests.
 express.post("/api/messages", (req, res) => {
   adapter.processActivity(req, res, async (context) => {
-    await bot.onTurn(context);
+    await bot.run(context);
   });
 });
 
@@ -102,7 +102,6 @@ express.use("/assets", Express.static(path.join(__dirname, "web/assets")));
 express.post("/acPrototypeTab/redirect.html", (req, res) => {
   const authResponse = req.body;
   const state = Math.random().toString(); // _guid() is a helper function in the sample
-  console.dir(authResponse);
   memoryStorage.write({
     [state]: {
       idToken: authResponse.id_token,
