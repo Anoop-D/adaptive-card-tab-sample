@@ -1,0 +1,104 @@
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Recommendations from Workday",
+      "wrap": true,
+      "size": "Large",
+      "weight": "Bolder"
+    },
+    {
+      "items": [
+        {
+          "text": "Here are some quick links that might be helpful.",
+          "wrap": true,
+          "spacing": "default",
+          "type": "TextBlock"
+        }
+      ],
+      "type": "Container"
+    }
+  ],
+  "actions": [
+    {
+      "data": {
+        "shouldSetHTTPError": true
+      },
+      "title": "Lookup a coworker",
+      "type": "Action.Submit"
+    },
+    {
+      "data": {
+        "shouldSetEmptyResponse": true
+      },
+      "title": "Take time off",
+      "type": "Action.Submit"
+    },
+    {
+      "card": {
+        "type": "AdaptiveCard",
+        "body": [
+          {
+            "text": "Please upload a photo of your receipt below including a brief description. If you want to manually enter a Quick Expense, type **manual**.",
+            "wrap": true,
+            "spacing": "default",
+            "type": "TextBlock"
+          }
+        ],
+        "version": "1.0.0"
+      },
+      "title": "Enter expense",
+      "type": "Action.ShowCard"
+    },
+    {
+      "card": {
+        "type": "AdaptiveCard",
+        "body": [
+          {
+            "items": [
+              {
+                "text": "**What is Ask Workday?** ✨",
+                "wrap": true,
+                "spacing": "default",
+                "type": "TextBlock"
+              },
+              {
+                "text": "Type questions or keywords to quickly get to info in Workday.",
+                "wrap": true,
+                "spacing": "None",
+                "type": "TextBlock"
+              },
+              {
+                "text": "",
+                "wrap": true,
+                "spacing": "default",
+                "type": "TextBlock"
+              }
+            ],
+            "type": "Container"
+          }
+        ],
+        "version": "1.2"
+      },
+      "title": "Ask Workday",
+      "type": "Action.ShowCard"
+    },
+    {
+      "data": {
+        "shouldSetMalformedTab": true
+      },
+      "title": "Company holidays",
+      "type": "Action.Submit"
+    },
+    {
+      "data": {
+        "shouldSetMalformedCard": true
+      },
+      "title": "More...",
+      "type": "Action.Submit"
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.2"
+}

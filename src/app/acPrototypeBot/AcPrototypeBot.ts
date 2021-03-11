@@ -16,6 +16,10 @@ import QuickActionCard from "./dialogs/QuickActionsCard";
 import ManagerDashboardCard from "./dialogs/ManagerDashboard";
 import InterviewCandidatesCard from "./dialogs/interviewCandidates";
 import SuccessCard from "./dialogs/SuccessCard";
+import RecommendationCard from "./dialogs/errors/RecommendationsCard";
+import ErrorAdminCard from "./dialogs/errors/ErrorAdminCard";
+import ErrorInterviewCandidatesCard from "./dialogs/errors/ErrorInterviewCandidates";
+import ErrorManagerDashboardCard from "./dialogs/errors/ErrorManagerDashboard";
 
 // Initialize debug logging module
 const log = debug("msteams");
@@ -50,6 +54,19 @@ export class AcPrototypeBot extends ActivityHandler {
       }
       const profile = await this.getUserProfile(ctx.activity.from.aadObjectId);
 
+      // Card for tab containing error tab scenarios
+      const recommendationCard = CardFactory.adaptiveCard(RecommendationCard);
+      const recommendationCardResponse:any = {
+        tab: {
+          type: "continue",
+          value: {
+            cards: [
+              { card: recommendationCard.content }
+            ],
+          },
+        }
+      };
+
       if (ctx.activity.value.tabContext.tabEntityId === "workday" && !profile) {
         return {
           status: 200,
@@ -69,6 +86,8 @@ export class AcPrototypeBot extends ActivityHandler {
             },
           },
         };
+      } else if (ctx.activity.value.tabContext.tabEntityId === "error_tab" && ctx.activity.name === "tab/fetch") {
+        return { status: 200, body: recommendationCardResponse };
       }
 
       const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
@@ -168,6 +187,10 @@ export class AcPrototypeBot extends ActivityHandler {
           }
           break;
         case "tab/submit":
+          if (ctx.activity.value.tabContext.tabEntityId === "error_tab") {
+            return await this.handleErrorTabScenarios(ctx.activity.value.data, recommendationCardResponse);
+          }
+
           if (ctx.activity.value.data.shouldLogout === true) {
             this.loggedInMemberOIDs.delete(ctx.activity.from.aadObjectId);
           }
@@ -208,4 +231,55 @@ export class AcPrototypeBot extends ActivityHandler {
       log("Error fetching user profile from graph: ", error);
     }
   }
+
+  private async handleErrorTabScenarios(data: any, defaultResponse: any): Promise<InvokeResponse> {
+    if (data == null) {
+      return { status: 200, body: defaultResponse };
+    }
+
+    if (data.shouldSetHTTPError === true) {
+      return { status: 430, body: null  };
+    } 
+
+    let responseBody: any;
+
+    const errorAdminCard:any = CardFactory.adaptiveCard(ErrorAdminCard);
+    const errorInterviewCandidatesCard:any = CardFactory.adaptiveCard(ErrorInterviewCandidatesCard);
+    const errorManagerDashboardCard:any = CardFactory.adaptiveCard(ErrorManagerDashboardCard);
+
+    const malformedTabResponse: any = {
+      tab: {
+        type: "continue",
+        value: {
+          cards: "",
+        },
+      },
+    };
+
+    const malformedCardResponse: any = {
+      tab: {
+        type: "continue",
+        value: {
+          cards: [
+            { card: errorAdminCard.content },
+            { card: errorInterviewCandidatesCard.content },
+            { card: errorManagerDashboardCard.content }
+          ],
+        },
+      },
+    }
+
+    if (data.shouldSetEmptyResponse === true) {
+      responseBody = null;
+    } else if (data.shouldSetMalformedTab === true) {
+      responseBody = malformedTabResponse;
+    } else if (data.shouldSetMalformedCard === true) {
+      responseBody = malformedCardResponse;
+    } else {
+      responseBody = defaultResponse;
+    }
+
+    return { status: 200, body: responseBody };
+  }
+
 }
